@@ -36,7 +36,7 @@ This project demonstrates the setup and configuration of a comprehensive network
 
 ![HTH Network Diagram](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/cdfafb7d-a009-4f98-a722-91f77b9a16ad)
 
-## Creating a Designated Save Location for the VMs and Files WORK ON IT WITH UPDATED PICTURES
+## Create a Designated Save Location for the VMs and Files WORK ON IT WITH UPDATED PICTURES
 
 1. Create a new folder called "**AD LAB**" in a location with the most space. Here I created it in my D: drive
 
@@ -61,57 +61,180 @@ This project demonstrates the setup and configuration of a comprehensive network
 
 ![HTH PFS Setup 2](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/8c85bb57-97fa-43df-8e1c-fb85cf772491)
 
+### Create the pfSense Virtual Machine in VirtualBox
+
+4. Open **Oracle Virtual Machine**, **Select New**
+
+- Name: **pfSense**
+- Folder: **Select a folder that has the most space, here I chose my designated Virtual Machines folder**
+- ISO Image:  **Select the ISO file in the location we downloaded and extracted from**
+  > ""pfSense-plus-installer..."
+- Type: **BSD**
+- Ver.: **FreeBSD (64-bit)** 
+
 ![HTH PFS Setup 3](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/ce8faf32-69a2-4247-bd29-a4192ae57715)
+
+5. For hardware
+
+- Base Memory: **2GB or 2048 MB**
+- Processors: **1 CPU**
+- Virtual Hard Disk Space: **minimum 10GB but I used 20GB** 
 
 ![HTH PFS Setup 4](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/cbb7a510-b928-42b5-ae9a-4858189df811)
 
+6. Now that we have added the VM, go to **Settings** -> **Network**
+
+- Adapter 1: **Bridged Adapter** and select your NIC card 
+
 ![HTH PFS Setup 5](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/705db5fe-b3c8-491d-b04c-b7fd295cd55c)
 
-![HTH PFS Setup 6 5](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/8f99b59d-6b95-4844-867e-63d5005c3206)
+- Adapter 2: **Internal Network** and here I chose my pre-existing internal network: **intranet**
 
 ![HTH PFS Setup 6](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/939529f2-f429-45db-b126-c35d7d61c12f)
 
+8. Go to **System Settings**
+
+- **Deselect Floopy**
+- **Reorganize** the boot order to **Hard Disk** -> **Optical**
+- That is all for the pfSense settings  
+
+![HTH PFS Setup 6 5](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/8f99b59d-6b95-4844-867e-63d5005c3206)
+
+### Boot up and Setup pfSense VM
+
+9. Now boot up the **pfSense VM**
+
 ![HTH PFS Setup 7](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/ceca3dbb-d4d9-4d61-ae3b-e1f5f3703580)
+
+10. Click **Accept**
 
 ![HTH PFS Setup 8](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/d4fc119c-50c1-47c4-b478-354753b7c99c)
 
+11. **Install pfSense** is highlighted and hit **OK**
+
 ![HTH PFS Setup 9](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/cd893cc8-7806-4d1a-b0ae-c9f1525cfce5)
+
+12. Select our **WAN Interface, em0**
+
+- **em0** is our WAN interface, using the bridged adapter to reach the internet
+- **em1** is our LAN interface, which will encompass our internal network NIC intranet
+- Select OK
 
 ![HTH PFS Setup 10](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/5dd37fbd-f1b1-4c28-a855-c63de894a661)
 
+13. Here in the **LAN em1 Network Mode Setup**, and edit the settings to the following
+
+  - IP Address: **172.16.0.2/24**
+  - DHCP Range Start: **172.16.0.100**
+  - DHCP Range End: **172.16.0.200** 
+
+- This will ensure the pfSense firewall will monitor the client users connected to the network from their IP addresses we set.
+
 ![HTH PFS Setup 11](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/e322a623-78a7-4780-9466-973571a4ea10)
+
+14. **Install CE** to start the installation of pfSense
 
 ![HTH PFS Setup 12](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/28eb22c0-d782-41cd-b00e-804c1755a640)
 
+15. Select **OK**
+
 ![HTH PFS Setup 13](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/73b71fe2-8933-40bd-ad2b-aae4650bcd2f)
+
+16. Select **Yes**
 
 ![HTH PFS Setup 14](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/eec749f5-efab-428d-90db-0874818d7896)
 
+17. Select **OK** to get the current Stable release and let it install
+
 ![HTH PFS Setup 15](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/4e541e02-39cc-4786-adb9-8c5ec9aab6db)
+
+18. Once you get to the home screen of pfSense, check to see if the **WAN** and **LAN** interfaces are configured correctly. Here the **LAN em1** is not our desired address range
+
+- The pfSense home screen will provide options we can go into to adjust, here press **2** on your keyboard and hit **enter**
 
 ![HTH PFS Setup 16](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/07ccf3b4-4bf6-4d5c-a18c-6b59738ac26b)
 
+19. Type in our address for the pfSense: **172.16.0.2**
+
+20. Then we want the subnet mask to be **255.255.255.0** which is equal to **24**. To do so, enter **24** and hit **enter**
+
+21. Next hit **Enter for none:** for the "enter the new LAN IPv$ upstream gateway address."
+
+22. Press **n**, to not configure "the IPv6 address"
+
+23. Again, hit **Enter for none:** to not enter a "new LAN IPv6 address"
+
+24. Press **y** to **enable DCHP server on LAN**
+
+25. Now enter our desired "IPv4 client address ranges": **172.16.0.100 & 172.16.0.200**
+
+26. Last, press **n** to not "revert to HTTP as the webConfigurator protocol"
+
 ![HTH PFS Setup 17](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/cee7cd6b-1618-4e25-8ef0-b0700d7a7508)
+
+27. pfSense will now apply the new settings and we have our new **IPv4 LAN address set to 172.16.0.2/24** to access the pfSense web interface to make further changes later on; the new URL is: **https://172.16.0.2/**
 
 ![HTH PFS Setup 18](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/93675a09-6fff-4955-ba94-b6f0dde15744)
 
+28. Great, now when we hit **continue** the pfSense is set to our configurations and matches the network diagram.
+  > Note that later on we will deactivate **IPv6 for WAN** as this homelab will use IPv4 addresses
+
 ![HTH PFS Setup 19](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/c41a8df1-eb27-4fce-90f5-0309796dce67)
+
+### Setting Up and Configuring the pfSense Web Interface from our Domain Controller VM 
+
+29. Next, we can boot up the Domain Controller (DC) VM, here I am logging into my **admin account** connected to my previously created domain: **virtualdomain.com**
 
 ![HTH PFS Setup 20](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/82d36b28-1273-4a1a-b57e-ff42837f40cd)
 
+30. Open an internet browser (**Microsoft Edge**) and type in the pfSense WebConfigurator interface: **172.16.0.2** in the URL search bar
+
+31. To sign in for the first time into pfSense web interface the credentials are
+ 
+ - Username: **admin**
+ - Password: **pfsense**
+
+ - Here we are going to follow the pfSense wizard setup
+
 ![HTH PFS Setup 21](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/99d5c8f4-364f-47bd-a3ec-14c98e7a39f7)
+
+32. Under General Information:
+
+- Hostname: **pfSense**
+- Domain: **virtualdomain.com**
+- Primary DNS Server: **172.16.0.1** (This is our DC VM which will provide the DNS resolution protocol to other client user devices
 
 ![HTH PFS Setup 22](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/b46daf9f-6643-4e65-8c71-e2d841adbef2)
 
+33. Under Time Server Information
+
+- Use the default given hostname: **2.pfsense.pool.ntp.org**
+- Timezone: select your appropriate timezone here I used **US/Central**
+
 ![HTH PFS Setup 23](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/1681b7e2-d226-4a17-a44c-95b6922bf513)
+
+34. Under Configure WAN Interface, select **DHCP**
 
 ![HTH PFS Setup 24](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/6c265583-951b-4617-8086-cebb69ae03ec)
 
+35. Under Configure LAN Interface, type in **172.16.0.2** this is our assigned IP address for pfSense
+
+36. Continue to hit **Next** to complete the wizard setup 
+
 ![HTH PFS Setup 25](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/9fa06fab-f332-4326-9251-bb17f4e3def3)
+
+37. We have finished the setup for pfSense to our network diagram and successfully connected the firewall to our domain
 
 ![HTH PFS Setup 26](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/ff283fa6-3a4d-47ad-a295-74ef02fa524e)
 
+38. We can check to see the current status of the pfSense by going to **Status -> Dashboard** on the top menu of the web interface
+
+- Here the green arrow for the interfaces tells us that pfSense is up and monitoring the WAN and LAN interfaces and devices connected to it
+- And scrolling down you will see more information and statuses of other components and features
+
 ![HTH PFS Setup 27](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/7a61ff46-43f6-4127-85db-cd701d8922e0)
+
+### Congratulations on setting up our firewall and adding the first layer of defense for our Active Directory home lab!
 
 ## Installing Snort in pfSense
 
