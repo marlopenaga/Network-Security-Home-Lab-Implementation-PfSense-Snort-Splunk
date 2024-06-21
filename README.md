@@ -305,7 +305,7 @@ In this section, we will be installing Snort an intrusion Detection System/Intru
 ### Congratulations on Installing and Configuring Snort, the IDS/IPS
   > We will revisit **pfSense** and **Snort** to make the **Splunk** SIEM be able to receive data and alerts.
 
-## Installing Splunk VM
+## Installing Splunk VM, the Security Information and Event Management (SIEM)
 
 ![HTH Splunk Setup 1](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/ced93c08-8e75-45bf-bce9-575eb1386480)
 
@@ -377,7 +377,7 @@ In this section, we will be installing Snort an intrusion Detection System/Intru
 
 ![HTH Splunk Setup 34](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/914c0386-628d-49e2-8c63-f4a9b5adfc33)
 
-## Install and Configuring Splunk Fowarder
+## Install and Configuration of Splunk Fowarder
 
 ![HTH Forwarder 1](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/a4150ccd-cbc4-47fc-8f9a-f6012ce42254)
 
