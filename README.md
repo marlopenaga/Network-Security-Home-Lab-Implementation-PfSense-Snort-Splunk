@@ -387,47 +387,107 @@ Now we will be installing the SIEM, Splunk. Splunk will centralize, collect, and
 
 ![HTH Splunk Setup 14](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/c681a7b6-8a84-4f21-9cf8-d459070c82dd)
 
+14. Select the **Ubuntu logo bottom left** and select **Settings -> Network** to open the network settings
+
+- Here we are going to manually set the IPv4 address to match the network diagram and this will become Splunk's address as well
+
 ![HTH Splunk Setup 15](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/3b610dc7-cf4d-49db-9f3e-be687b15e325)
+
+15. Select **Manual** and type in the following
+
+- Address: **172.16.0.4**
+- Netmask: **255.255.255.0**
+- Gateway: **172.16.0.2** (pfSense Firewall)
+- DNS: **172.16.0.1** (DC)
+- Hit **Apply**
 
 ![HTH Splunk Setup 16](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/6aa4bfed-3e64-4965-97c4-63854ab68ab2)
 
+16. Here we are going to test the connectivity of the Ubuntu VM to our firewall and DC by using the **ping command in Ubuntu's terminal**
+
+- Type **ping -c 5 172.16.0.2**
+  - This will ping the **pfSense** firewall
+  - the **-c 5** input will send 5 data packets to the destination address, without **-c** it will continue to send data packets until manually stopped
+- Repeat the same procedure and ping the DC VM **172.16.0.1**
+  - Note you will need to have both the **pfSense** and **DC** VM opened to do so
+
 ![HTH Splunk Setup 17](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/3e50e4a8-21bf-4a9d-976b-16f27501e361)
+
+17. Now that the Ubuntu VM is connected successfully, we are going to download **Splunk Enterprise** for free. You will be prompted to create a free account and have access for 14 days.
+
+- Link: **https://www.splunk.com/en_us/download.html**
+  - Or go open **Mozilla Firefox** and enter **www.splunk.com** and click **Free Splunk**
 
 ![HTH Splunk Setup 18](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/ea38b65e-9ae7-42ec-be43-c45b37a7a5c5)
 
+- Scroll all down and you should see under **Products** -> **Free Trials * Downloads**
+
 ![HTH Splunk Setup 19](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/15eb44d1-520f-452e-bae2-e201e65b1f68)
 
+- Click **Get My Free Trial** under **Splunk Enterprise**
+
 ![HTH Splunk Setup 20](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/12efcf72-1058-47a1-8afd-be9c17ac9640)
+
+- Make sure to select **Linux** and get the **.deb** file and click **Copy wget link**
+- Open **Ubuntu Terminal** and paste the **Splunk wget link** into the terminal
 
 ![HTH Splunk Setup 21](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/8af60e6d-09cb-489f-a31e-223f97df8084)
 
 ![HTH Splunk Setup 22](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/c1baaad5-596e-4dd1-bb25-e0a58c902db7)
 
+18. Once the **Splunk** download is finished inside the terminal, type in the following to start the installation
+
+- **sudo dpkg -i (copy and paste the **Splunk file name that ends with .deb**)
+- Then you will be prompted to **enter the password for your Ubuntu account** to start the installation
+
 ![HTH Splunk Setup 23](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/4eee41a0-72b9-4437-ad06-5520bf40d06e)
 
 ![HTH Splunk Setup 24](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/9898740b-e2a1-4840-bc51-d8c0bf95dd5f)
 
+19. Create the **Splunk Admin Account** that will grant you access to the Splunk Web Interface later on
+
 ![HTH Splunk Setup 25](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/098f0172-7e88-4ae3-ab39-ad3741a4122e)
+
+20. Once you are down it will create the web interface that can be accessed through the internet; however here the web interface did not make it to match my Ubuntu's (Splunk) IP Address: **172.16.0.4**. But I will show you how to change that.
 
 ![HTH Splunk Setup 26](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/07c23077-3337-449c-8cf7-bc918474a83c)
 
+21. Type in the following:
+
+- "**sudo nano /opt/splunk/etc/system/local/web.conf**"
+  - This will bring up the GUI to configure the web interface to match what we want
+
 ![HTH Splunk Setup 27](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/411c6bb4-894a-42ce-bd47-41849b391150)
+
+- Once inside the GUI, type in **8000** for the http-port and make the **server.socket_host to 172.16.0.4**
+  - Apply the changes and exit the GUI
 
 ![HTH Splunk Setup 28](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/12c614ab-2398-4cef-9398-b9c2648b6e98)
 
+22. Restart **Splunk**
+
+- Type in the line: "**sudo /opt/splunk/bin/splunk restart**" and let it restart
+
 ![HTH Splunk Setup 29](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/5fcc32c4-b5bb-4975-bb4d-7a75fb4828fb)
+
+- Now the web server should be ""**http://172.16.0.4:8000**" and we can now access **Splunk Enterprise Web Interface** properly
 
 ![HTH Splunk Setup 30](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/43611e86-680c-461f-a1a0-4d6a6a52d326)
 
+23. Open **Mozilla Firefox** and type in our new web address "**172.16.0.4:8000**" into the URL bar
+
+- Here we type in the **Admin Account credentials** we set previously inside the terminal and sign in
+
 ![HTH Splunk Setup 31](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/46229452-be9e-4b61-afe6-c7b592558351)
+
+24. This is the **Splunk Administrator Dashboard**, feel free to explore the option but we will come back to this as the next step is to install the **Splunk Forwarder** into our **DC** and configure p**fSense to send the firewall and Snort alerts to Splunk**
 
 ![HTH Splunk Setup 32](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/88e19c1d-ce28-44be-8ca4-d902e4392f21)
 
-![HTH Splunk Setup 33](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/9a94153e-0382-4c3e-9355-c2457830e1f4)
+### Congratulations, we have installed and set up our SIEM, Splunk
+  > Another security safeguard that centralizes and collects security alerts and data from the firewall and IDS/IPS for management. This is the last layer of defense for this home lab network diagram. The next step is configuring the DC, Firewall, and IDS/IPS to work and send data to Splunk so that we can organize and view Splunk's web interface.
 
-![HTH Splunk Setup 34](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/914c0386-628d-49e2-8c63-f4a9b5adfc33)
-
-## Install and Configuration of Splunk Fowarder
+## Install and Configuration of Splunk Forwarder
 
 ![HTH Forwarder 1](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/a4150ccd-cbc4-47fc-8f9a-f6012ce42254)
 
