@@ -307,33 +307,83 @@ In this section, we will be installing Snort an intrusion Detection System/Intru
 
 ## Installing Splunk VM, the Security Information and Event Management (SIEM)
 
+Now we will be installing the SIEM, Splunk. Splunk will centralize, collect, and analyze the alerts from the pfSense firewall and the Snort IDS/IPS. Splunk will be installed in a separate VM using the Ubuntu Linux.
+
+1. First install **Ubuntu Desktop** and save it into your designated download files for ease of access
+
+  > Link:  https://ubuntu.com/desktop
+
 ![HTH Splunk Setup 1](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/ced93c08-8e75-45bf-bce9-575eb1386480)
+
+2. After the download is finished, go to **VirtualBox** and create a new virtual machine
+
+- Name: **Splunk**
+- Folder: **Select a folder that has the most space, here I chose my designated Virtual Machines folder**
+- ISO Image:  **Select the ISO file in the location we downloaded and extracted from**
+  > The ISO File is: ubunutu-24.04-desktop-amd64.iso
+- **Check the Skip Unattended Installation**
 
 ![HTH Splunk Setup 2](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/5d7729b0-7afc-44e3-b98e-9b2722591a71)
 
+3. Hardware Settings
+
+ - Base Memory: **4096 MB or 4GB**
+ - Processors: **1 CPU or 2 CPU**
+  > Splunk will require more computing capabilities so pick what is best for you
+
 ![HTH Splunk Setup 3](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/0d9b3998-12a4-4321-8ebe-f3179667cc5d)
+
+4. Virtual Hard Disk
+
+- Create the Virtual Hard Disk option: **20GB - 40GB**
+- Select **Next
 
 ![HTH Splunk Setup 4](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/6da2030c-c323-43f4-a089-dba592b1022b)
 
+5. Splunk Settings
+
+- In **General -> Advanced Turn on bidirectional for Shared Clipboard and Drag'n'Drop**
+
 ![HTH Splunk Setup 5 5](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/3e43a9d1-7a91-4cd2-9d96-451ac08c8d4d)
+
+- In **Network**, we only need 1 adapter activated: **Internal Network - intranet**
+- Now we can **boot up the Splunk VM**
 
 ![HTH Splunk Setup 5](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/629b2f67-348c-4720-82ff-dce78d69ebde)
 
+6. Let Ubuntu install and you will be directed to the wizard setup of Ubuntu
+
 ![HTH Splunk Setup 6](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/afd832b8-0f6b-4b48-8044-238d02fee6dd)
+
+7. Continue through and select **Do not connect to the internet** as we will assign the IP address of Splunk manually later
 
 ![HTH Splunk Setup 7](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/8355449e-fe4e-49eb-b16a-64fada537bf7)
 
+8. Select **Default selection**
+
 ![HTH Splunk Setup 8](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/b014feae-9a0c-4c70-af9c-c1b8dfca4ef9)
+
+9. Check **Install third-party software for graphics and Wi-Fi hardware**
 
 ![HTH Splunk Setup 9](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/21eaa9fd-5df3-4518-9e4d-4c4a134f54e0)
 
+10. Select **Erase disk and install Ubuntu**
+
 ![HTH Splunk Setup 10](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/43e8fa20-4d12-4883-bf5e-da5bcbaf1cbf)
+
+11. Here create your Ubuntu desktop account, I tailored it to Splunk and make sure to keep track of all logins in a separate note or text file.
 
 ![HTH Splunk Setup 11](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/8d1dffef-ad83-4abb-ac80-00fd6ae33359)
 
+- Make sure in the review screen that every setting is okay and matches and click **Install**.
+
 ![HTH Splunk Setup 12](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/9b705635-7c15-4bfa-b672-fcabfb1f8ab8)
 
+12. Now restart Ubuntu by clicking **Restart now**. This may take a few minutes.
+
 ![HTH Splunk Setup 13](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/32b54e97-6dd4-4b20-8ae7-4336d92c1a2d)
+
+13. Our Ubuntu Splunk account has been created and use the password we created to log into Ubuntu
 
 ![HTH Splunk Setup 14](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/c681a7b6-8a84-4f21-9cf8-d459070c82dd)
 
