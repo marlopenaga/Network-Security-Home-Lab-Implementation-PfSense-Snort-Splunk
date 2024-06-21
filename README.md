@@ -51,6 +51,8 @@ This project demonstrates the setup and configuration of a comprehensive network
 
 ## Installing pfSense as a Virtual Machine
 
+The current home lab has no security infrastructure at the moment therefore we will implement a firewall first. PfSense is the firewall of choice and will filter out incoming and outgoing data packets from the internet and between devices inside of our internal network in VirtualBox, intranet. The pfSense will also serve as a DHCP server as previously the Domain Controller served as the DHCP server. 
+
 1. Click on the link to download the latest version of **pfSense**. It may ask you to create a free account.
   > *pfSense Download** https://www.pfsense.org/download/
 
@@ -238,31 +240,70 @@ This project demonstrates the setup and configuration of a comprehensive network
 
 ## Installing Snort in pfSense
 
+In this section, we will be installing Snort an intrusion Detection System/Intrusion Prevention System (IDS/IPS). Snort is an available feature in pfSense. Snort will provide real-time network traffic analysis and data packet logging while conforming to set rules. Having a firewall with an IDS/IPS will increase the security infrastructure of the home lab.
+
+1. While still in the pfSense web interface using the DC VM, navigate to **System -> Package Manager -> Available Packages**
+
+2. Search **snort** and click install to start the download of the Snort package
+
 ![HTH Snort Setup 1](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/c77f26d3-96e1-4668-9e6f-0aa236d895b7)
+
+3. Once it is done installing, navigate to **Services -> Snort**
 
 ![HTH Snort Setup 2](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/4331c26d-288b-4d2c-ae58-95ff59bf7d05)
 
+4. Here we are going to enable the **Snort GPLv2 Community Rules** and download them to be enforced onto the interface
+
+  - Feel free to go over the options in **Global Settings** and add any to your preference
+
 ![HTH Snort Setup 3](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/b4a865a4-af1b-4502-a223-eac91038f75d)
+
+5. Go to **Updates** and you should see that **Snort GPLv2 Community Rules** have not been downloaded yet.
+
+6. Select **Update Rules** to start the download of the rules
 
 ![HTH Snort Setup 4](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/7ef4dc91-8496-46f4-90a8-b68c655bea87)
 
+7. Now the rules have been downloaded onto Snort
+
 ![HTH Snort Setup 5](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/ba57b12f-939b-4772-aefd-40f488a118f4)
+
+8. Go to the **Snort Interfaces** tab and select **LAN Categories**. Make sure the **Snort GPLv2 Community Rules enable checkbox is checked and save
 
 ![HTH Snort Setup 6](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/7d0942de-ea84-4a73-b7c4-e66e929868dc)
 
+7. Now navigate to **LAN Rules**, and select **GPLv2_community_rules from the dropdown of **Category Selection**
+
+- Here you will be able to view all the enabled and disabled rules. Feel free to enable more rules from the community rules; make sure to apply and save
+
 ![HTH Snort Setup 7](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/619e3abc-5976-446b-ae25-301c5adc40c9)
+
+8. Now we are going to enable the **Snort interface** to do this navigate to the **Snort Interface** tab and click the **blue play button icon**.
 
 ![HTH Snort Setup 8](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/80df6990-8b5d-4173-be9b-b815a94d24c1)
 
+- A **green checkmark icon** will appear indicating that snort is up and running. Now click the **pencil icon** under the **Actions** title to view the settings
+
 ![HTH Snort Setup 9](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/1cd72d30-a193-4c54-9dee-3c15ce240123)
+
+-Copy the following settings pictures below and customize the options to your liking
+  - **Interface** is designated for **LAN(em1)** only
+  - **Enable Send Alerts to System log** setting. This will send the alerts to pfSense's **Syslogs** where later on will forward these alerts (syslogs) to **Splunk** the SIEM
 
 ![HTH Snort Setup 10](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/e8fabba5-6bd0-417a-be35-8ddcb6751976)
 
 ![HTH Snort Setup 11](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/2c07917a-74f7-4c1d-bf3f-c1c4c28b22d2)
 
+- Make sure to click **Save**
+
 ![HTH Snort Setup 12](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/303fdb93-240c-4bc6-a5d6-96cd7604300f)
 
+9. **Snort is all set up and configured inside pfSense and you can check the status of the service and other services you would want to add by customizing the dashboard of pfSense
+
 ![HTH Snort Setup 13](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/ac06b957-7044-4dc2-b514-2c837c97791e)
+
+### Congratulations on Installing and Configuring Snort, the IDS/IPS
+  > We will revisit **pfSense** and **Snort** to make the **Splunk** SIEM be able to receive data and alerts.
 
 ## Installing Splunk VM
 
