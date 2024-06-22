@@ -1,4 +1,5 @@
 # Network-Security-Home-Lab-Implementation-pfSense-Snort-Splunk
+
 This project demonstrates the setup and configuration of a comprehensive network security solution in VirtualBox. The lab features an Active Directory (AD) domain with 100 users. The primary focus is on implementing and integrating pfSense (Firewall), Snort (IDS/IPS), and Splunk (SIEM) to secure and monitor the network.
 
 ### Key Components:
@@ -287,6 +288,7 @@ In this section, we will be installing Snort an intrusion Detection System/Intru
 ![HTH Snort Setup 9](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/1cd72d30-a193-4c54-9dee-3c15ce240123)
 
 -Copy the following settings pictures below and customize the options to your liking
+
   - **Interface** is designated for **LAN(em1)** only
   - **Enable Send Alerts to System log** setting. This will send the alerts to pfSense's **Syslogs** and later we will forward these alerts (syslogs) to **Splunk** the SIEM
 
@@ -303,6 +305,7 @@ In this section, we will be installing Snort an intrusion Detection System/Intru
 ![HTH Snort Setup 13](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/ac06b957-7044-4dc2-b514-2c837c97791e)
 
 ### Congratulations on Installing and Configuring Snort, the IDS/IPS
+ 
   > We will revisit **pfSense** and **Snort** to make the **Splunk** SIEM be able to receive data and alerts.
 
 ## Installing Splunk VM, the Security Information and Event Management (SIEM)
@@ -638,7 +641,28 @@ This is the last step needed for Splunk configurations. This will allow the Wind
 
 - If we go to **Sources** and **Sourcetypes**, the list shows the type of sources and the count as well for each
 - Confirmation that pfSense, Snort, and Splunk Forwarder are configured correctly and send traffic events/alerts to one central interface Splunk our SIEM
+- The next step is to create a dashboard in Splunk that visualizes the data and logs
 
 ![HTH Forwarder 22](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/62891a07-8695-4bce-9275-b24414d1f3dc)
 
 ![HTH Forwarder 23](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/448052b1-a05b-4460-ab12-988f76fca4db)
+
+# Congratulations!
+
+We have completed the network diagram that we started and configured every component to communicate and connect to each other hardening the overall environment.  
+
+## Old Network Diagram
+
+![](https://github.com/marlopenaga/Active-Directory-Home-Lab-2024/blob/main/images/AD%20LAB%201.PNG?raw=true)
+
+## New Network Diagram
+
+![HTH Network Diagram](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/cdfafb7d-a009-4f98-a722-91f77b9a16ad)
+
+## Wrapping Up
+
+The purpose of this lab was to set up and implement layered network security into the previous Active Directory Home Lab that simulated a simple corporate network. We added a **firewall** with **pfSense**, an **intrusion detection system (IDS)**, an **intrusion prevention system (IPS)** with **Snort**, and a **security information and event management** (SIEM) with **Splunk**. These security controls harden the environment, maintains business continuity, and transparency of events in the network.
+
+Additional steps would be to visualize the data in a dashboard and incorporate a red team virtual machine like Kali Linux to try test the security of the network environment. I know depending on your current computer specifications you may run into capability limitations like I did at times. Completing this lab helped me gain knowledge of the functionality of firewalls, IDS/IPS, and SIEMs including how to troubleshoot to ensure connectivity of everything in the network.
+
+### I hope you enjoyed this lab and learned new knowledge and skills along the way, thank you for your time!
