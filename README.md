@@ -564,37 +564,81 @@ This is the last step for the setup of our network security for the home lab. We
 
 ### Installing Splunk Universal Forwarder in the DC VM
 
+This is the last step needed for Splunk configurations. This will allow the Windows DC and other Client Users connected to the domain; events and alerts to be sent to Splunk.
+
+1. Still on the DC VM open up the Splunk website, navigate to the downloads and free trial page we have done before. Select **Get My Free Download** under **Universal Forwarder**
+  - Link: https://www.splunk.com/en_us/download.html
+
 ![HTH Forwarder 9](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/4acf5a22-cb60-4401-9582-a62caadcc958)
+
+2. Select **Windows** and Select **Download Now** for the **64-bit edition**
+  - Let the download complete and click file to start the Wizard Setup
 
 ![HTH Forwarder 10](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/a6c3dc3c-6aef-4c84-a6d4-e1e0a08d07ca)
 
+4. Setting up the **Splunk Universal Forwarder**
+
+- **Check** the box to agree to the License Agreement
+- **Select An on-premises Splunk Enterprise instance**
+- **Select Customize Options**
+
 ![HTH Forwarder 11](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/98758aef-12a5-4fa3-bb23-909a8f6cf94e)
+
+- Select **Local System**
 
 ![HTH Forwarder 12](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/6ee01b6f-a30d-4b5f-b238-14e0eaabfdc3)
 
+- Select the type of event logs and what you want Splunk to forward from Windows, the following is what I checked
+  - **Application Logs**
+  - **Security Log**
+  - **System Log**
+  - **Forwarded Events Log**
+  - **Setup Log**
+  - **Enable AD Monitoring**
+
 ![HTH Forwarder 13](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/2d7f5cfc-9cf1-4719-977b-f380f88cdd5b)
+
+- Here create an admin account for Splunk Universal Forwarder, I just did the same credentials for the Splunk Enterprise Installation process
 
 ![HTH Forwarder 14](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/368286b0-d1dc-4502-abe7-5d94e626a624)
 
+- Before this page, the **deployment server** is optional and I skipped it but the **Receiving Indexer** is needed to forward directly to our Splunk Interface
+  - Hostname: **172.16.0.4**
+  - Port: **9997**, this is the port that we previously added in the Splunk Interface: Forwarding and Receiving Settings
+
 ![HTH Forwarder 15](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/c84e1d38-2561-428f-a0b4-98c80c108bc9)
+
+- Select **Finish** and now the **Splunk Universal Forwarder** is installed and configured to send directly to Splunk
 
 ![HTH Forwarder 16](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/cab2c062-e519-4010-92b8-64946bb0ec91)
 
+5. Here I went into **Windows Terminal** to restart **SplunkForwarder**
+  - Type: "**Restart-Service SplunkForwarder**"
+
 ![HTH Forwarder 17](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/9cc6c5e7-4acd-450c-baff-97a14df49773)
 
-![HTH Forwarder 18](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/86348786-499c-4853-9b5e-0fd461ea4e27)
+### Checking Everything is Connected and Sent to Splunk
+
+1. Go back to the **Splunk VM** and open the **Splunk Web Interface**
+
+- Click **Search your data**
 
 ![HTH Forwarder 19](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/be8186e6-9a99-4d63-906f-5cd89c8c9d5e)
 
+- Select **Data Summary**
+
 ![HTH Forwarder 20](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/0f1e2431-62b2-450d-af38-edc66bdd8a78)
 
+- Inside **Data Summary**, we should now see two Hosts connected to our Splunk SIEM
+  - **172.16.0.2** is our firewall and IDS/IPS (pfSense and Snort)
+  - **DC** is the domain controller (DC) of our domain: virtualdomain.com
+  - Under **Count** is the number of logs sent to Splunk dependent on what we checked during the Splunk Forwarder setup
+
 ![HTH Forwarder 21](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/7ea5adbc-c489-43c3-a209-c818d2bdb409)
+
+- If we go to **Sources** and **Sourcetypes**, the list shows the type of sources and the count as well for each
+- Confirmation that pfSense, Snort, and Splunk Forwarder are configured correctly and send traffic events/alerts to one central interface Splunk our SIEM
 
 ![HTH Forwarder 22](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/62891a07-8695-4bce-9275-b24414d1f3dc)
 
 ![HTH Forwarder 23](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/448052b1-a05b-4460-ab12-988f76fca4db)
-
-![HTH Forwarder 24](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/bce4bd8f-b17c-4cf9-b5ea-cf38d194bd37)
-
-![HTH Forwarder 25](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/12c9ee69-721a-4fc8-9273-7cf9afdad1cb)
-
