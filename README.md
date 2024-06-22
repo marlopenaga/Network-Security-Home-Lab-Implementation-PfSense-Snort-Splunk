@@ -37,18 +37,17 @@ This project demonstrates the setup and configuration of a comprehensive network
 
 ![HTH Network Diagram](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/cdfafb7d-a009-4f98-a722-91f77b9a16ad)
 
-## Create a Designated Save Location for the VMs and Files WORK ON IT WITH UPDATED PICTURES
+## Create a Designated Save Location for the VMs and Download Files
 
-1. Create a new folder called "**AD LAB**" in a location with the most space. Here I created it in my D: drive
+1. Create a new folder called "**Download Files Lab**" in a location with the most space. Here I created it in my D: drive
+  > I have a different name here but name it "Download Files Lab" or whatever is easier
 
-![](https://github.com/marlopenaga/Active-Directory-Home-Lab-2024/blob/main/images/AD%20LAB%202.PNG?raw=true)
+![hth save file](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/f5c063a3-67a0-4c76-9810-2732c48ef4f1)
 
-3. Inside of **AD LAB** create two folders: **AD Lab Files**, **Virtual Machines**
+2. Create a folder called **Virtual Machines** in a location with the most space. Here I created it in my D: drive. This is the folder where we will save the virtual machines created in VirtualBox.
+  > If you already have a folder to save virtual machines, use that instead
 
-  - **HTH Lab Files** is the location where the VirtualBox, Windows Server 2022 ISO, and Windows 10 Enterprise installation files will be located
-  - **Virtual Machines** is the location where we will install our VMs later using VirtualBox, which will be discussed later
-
-![](https://github.com/marlopenaga/Active-Directory-Home-Lab-2024/blob/main/images/AD%20LAB%203.PNG?raw=true)
+![vm save files](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/a3d1b4e1-915a-4396-90f4-55ee5378829d)
 
 ## Installing pfSense as a Virtual Machine
 
