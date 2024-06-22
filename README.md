@@ -6,7 +6,7 @@ This project demonstrates the setup and configuration of a comprehensive network
 - **pfSense Firewall**: Configured to protect the network perimeter, manage NAT, establish firewall rules, and enable secure VPN connections.
 - **Snort IDS/IPS**: Deployed and tuned to monitor network traffic, providing real-time threat detection and automated response to intrusions. Integrated inside pfSense as a package interface with community rules uploaded and enforced. 
 - **Splunk SIEM**: Installed and integrated as a Security Information and Event Management (SIEM) solution for centralized log collection, analysis, and correlation, enhancing visibility and improving incident response.
-- **Oracle VirtualBox**: The lab is completed and configured inside VirtualBox. Created separate Virtual Machines (VMs) for pfSense & Snort, Splunk (Ubuntu), the Windows Server 2022 Domain Controller (DC), and Windows 10 Enterprise Clent User.
+- **Oracle VirtualBox**: The lab is completed and configured inside VirtualBox. Created separate Virtual Machines (VMs) for pfSense & Snort, Splunk (Ubuntu), the Windows Server 2022 Domain Controller (DC), and Windows 10 Enterprise Client User.
 
 ### Active Directory Setup:
 
@@ -20,9 +20,9 @@ This project demonstrates the setup and configuration of a comprehensive network
 
 ### Important to Read:
 
-- This will focus on the setup, implementation, and configuration of the security controls on my previous Active Directory HomeLab.
-  - Github link: https://github.com/marlopenaga/Active-Directory-Home-Lab-2024
-  - My Github link will guide you to the setup and installation of my previous project of setting up an Active Directory in VirtualBox.
+- This will focus on the setup, implementation, and configuration of the security controls on my previous Active Directory Home Lab.
+  - GitHub link: https://github.com/marlopenaga/Active-Directory-Home-Lab-2024
+  - My GitHub link will guide you to the setup and installation of my previous project of setting up an Active Directory in VirtualBox.
 
 ### Links:
 
@@ -32,7 +32,7 @@ This project demonstrates the setup and configuration of a comprehensive network
 
 ## Network Diagram
 - This is an overview of the network diagram we are going to set up and configure.
-> As mentioned, for the Active Directory setup please go to my Github and follow the Active Directory Home Lab 2024
+> As mentioned, for the Active Directory setup please go to my GitHub and follow the Active Directory Home Lab 2024
 
 ![HTH Network Diagram](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/cdfafb7d-a009-4f98-a722-91f77b9a16ad)
 
@@ -51,7 +51,7 @@ This project demonstrates the setup and configuration of a comprehensive network
 
 ## Installing pfSense as a Virtual Machine
 
-The current home lab has no security infrastructure at the moment therefore we will implement a firewall first. PfSense is the firewall of choice and will filter out incoming and outgoing data packets from the internet and between devices inside of our internal network in VirtualBox, intranet. The pfSense will also serve as a DHCP server as previously the Domain Controller served as the DHCP server. 
+The current home lab has no security infrastructure now therefore we will implement a firewall first. PfSense is the firewall of choice and will filter out incoming and outgoing data packets from the internet and between devices inside of our internal network in VirtualBox, intranet. The pfSense will also serve as a DHCP server as previously the Domain Controller served as the DHCP server. 
 
 1. Click on the link to download the latest version of **pfSense**. It may ask you to create a free account.
   > *pfSense Download** https://www.pfsense.org/download/
@@ -96,7 +96,7 @@ The current home lab has no security infrastructure at the moment therefore we w
 
 8. Go to **System Settings**
 
-- **Deselect Floopy**
+- **Deselect Floppy**
 - **Reorganize** the boot order to **Hard Disk** -> **Optical**
 - That is all for the pfSense settings  
 
@@ -160,7 +160,7 @@ The current home lab has no security infrastructure at the moment therefore we w
 
 20. Then we want the subnet mask to be **255.255.255.0** which is equal to **24**. To do so, enter **24** and hit **enter**
 
-21. Next hit **Enter for none:** for the "enter the new LAN IPv$ upstream gateway address."
+21. Next hit **Enter for none:** for the "enter the new LAN IPv4 upstream gateway address."
 
 22. Press **n**, to not configure "the IPv6 address"
 
@@ -170,16 +170,16 @@ The current home lab has no security infrastructure at the moment therefore we w
 
 25. Now enter our desired "IPv4 client address ranges": **172.16.0.100 & 172.16.0.200**
 
-26. Last, press **n** to not "revert to HTTP as the webConfigurator protocol"
+26. Last, press **n** to not "revert to HTTP as the web Configurator protocol"
 
 ![HTH PFS Setup 17](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/cee7cd6b-1618-4e25-8ef0-b0700d7a7508)
 
-27. pfSense will now apply the new settings and we have our new **IPv4 LAN address set to 172.16.0.2/24** to access the pfSense web interface to make further changes later on; the new URL is: **https://172.16.0.2/**
+27. pfSense will now apply the new settings and we have our new **IPv4 LAN address set to 172.16.0.2/24** to access the pfSense web interface to make further changes later; the new URL is: **https://172.16.0.2/**
 
 ![HTH PFS Setup 18](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/93675a09-6fff-4955-ba94-b6f0dde15744)
 
 28. Great, now when we hit **continue** the pfSense is set to our configurations and matches the network diagram.
-  > Note that later on we will deactivate **IPv6 for WAN** as this homelab will use IPv4 addresses
+  > Note that later we will deactivate **IPv6 for WAN** as this home lab will use IPv4 addresses
 
 ![HTH PFS Setup 19](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/c41a8df1-eb27-4fce-90f5-0309796dce67)
 
@@ -189,7 +189,7 @@ The current home lab has no security infrastructure at the moment therefore we w
 
 ![HTH PFS Setup 20](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/82d36b28-1273-4a1a-b57e-ff42837f40cd)
 
-30. Open an internet browser (**Microsoft Edge**) and type in the pfSense WebConfigurator interface: **172.16.0.2** in the URL search bar
+30. Open an internet browser (**Microsoft Edge**) and type in the pfSense Web Configurator interface: **172.16.0.2** in the URL search bar
 
 31. To sign in for the first time into pfSense web interface the credentials are
  
@@ -211,7 +211,7 @@ The current home lab has no security infrastructure at the moment therefore we w
 33. Under Time Server Information
 
 - Use the default given hostname: **2.pfsense.pool.ntp.org**
-- Timezone: select your appropriate timezone here I used **US/Central**
+- Time zone: select your appropriate time zone here I used **US/Central**
 
 ![HTH PFS Setup 23](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/1681b7e2-d226-4a17-a44c-95b6922bf513)
 
@@ -229,7 +229,7 @@ The current home lab has no security infrastructure at the moment therefore we w
 
 ![HTH PFS Setup 26](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/ff283fa6-3a4d-47ad-a295-74ef02fa524e)
 
-38. We can check to see the current status of the pfSense by going to **Status -> Dashboard** on the top menu of the web interface
+38. We can check to see the status of the pfSense by going to **Status -> Dashboard** on the top menu of the web interface
 
 - Here the green arrow for the interfaces tells us that pfSense is up and monitoring the WAN and LAN interfaces and devices connected to it
 - And scrolling down you will see more information and statuses of other components and features
@@ -288,7 +288,7 @@ In this section, we will be installing Snort an intrusion Detection System/Intru
 
 -Copy the following settings pictures below and customize the options to your liking
   - **Interface** is designated for **LAN(em1)** only
-  - **Enable Send Alerts to System log** setting. This will send the alerts to pfSense's **Syslogs** where later on will forward these alerts (syslogs) to **Splunk** the SIEM
+  - **Enable Send Alerts to System log** setting. This will send the alerts to pfSense's **Syslogs** and later we will forward these alerts (syslogs) to **Splunk** the SIEM
 
 ![HTH Snort Setup 10](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/e8fabba5-6bd0-417a-be35-8ddcb6751976)
 
@@ -351,7 +351,7 @@ Now we will be installing the SIEM, Splunk. Splunk will centralize, collect, and
 
 ![HTH Splunk Setup 5](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/629b2f67-348c-4720-82ff-dce78d69ebde)
 
-6. Let Ubuntu install and you will be directed to the wizard setup of Ubuntu
+6. Let Ubuntu install, and you will be directed to the wizard setup of Ubuntu
 
 ![HTH Splunk Setup 6](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/afd832b8-0f6b-4b48-8044-238d02fee6dd)
 
@@ -371,7 +371,7 @@ Now we will be installing the SIEM, Splunk. Splunk will centralize, collect, and
 
 ![HTH Splunk Setup 10](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/43e8fa20-4d12-4883-bf5e-da5bcbaf1cbf)
 
-11. Here create your Ubuntu desktop account, I tailored it to Splunk and make sure to keep track of all logins in a separate note or text file.
+11. Create your Ubuntu desktop account, I tailored it to Splunk and make sure to keep track of all logins in a separate note or text file.
 
 ![HTH Splunk Setup 11](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/8d1dffef-ad83-4abb-ac80-00fd6ae33359)
 
@@ -389,7 +389,7 @@ Now we will be installing the SIEM, Splunk. Splunk will centralize, collect, and
 
 14. Select the **Ubuntu logo bottom left** and select **Settings -> Network** to open the network settings
 
-- Here we are going to manually set the IPv4 address to match the network diagram and this will become Splunk's address as well
+- Here we are going to manually set the IPv4 address to match the network diagram, and this will become Splunk's address as well
 
 ![HTH Splunk Setup 15](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/3b610dc7-cf4d-49db-9f3e-be687b15e325)
 
@@ -444,7 +444,7 @@ Now we will be installing the SIEM, Splunk. Splunk will centralize, collect, and
 
 ![HTH Splunk Setup 24](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/9898740b-e2a1-4840-bc51-d8c0bf95dd5f)
 
-19. Create the **Splunk Admin Account** that will grant you access to the Splunk Web Interface later on
+19. Create the **Splunk Admin Account** that will grant you access to the Splunk Web Interface later
 
 ![HTH Splunk Setup 25](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/098f0172-7e88-4ae3-ab39-ad3741a4122e)
 
@@ -480,7 +480,7 @@ Now we will be installing the SIEM, Splunk. Splunk will centralize, collect, and
 
 ![HTH Splunk Setup 31](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/46229452-be9e-4b61-afe6-c7b592558351)
 
-24. This is the **Splunk Administrator Dashboard**, feel free to explore the option but we will come back to this as the next step is to install the **Splunk Forwarder** into our **DC** and configure p**fSense to send the firewall and Snort alerts to Splunk**
+24. This is the **Splunk Administrator Dashboard**, feel free to explore the option but we will come back to this as the next step is to install the **Splunk Forwarder** into our **DC** and configure **pfSense to send the firewall and Snort alerts to Splunk**
 
 ![HTH Splunk Setup 32](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/88e19c1d-ce28-44be-8ca4-d902e4392f21)
 
@@ -516,13 +516,13 @@ This is the last step for the setup of our network security for the home lab. We
 
 ![HTH Forwarder 3](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/c9605d4e-b8e0-4e61-88d5-a349abae6073)
 
-5. Open up the **Splunk Enterprise Interface** (172.16.0.4:8000) in your web browser
+5. Open the **Splunk Enterprise Interface** (172.16.0.4:8000) in your web browser
 
 6. Navigate to **Settings -> Data Inputs**
 
 ![HTH Forwarder 4](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/8704ecbd-4a4c-4ff5-8634-716c2a8226d8)
 
-7. Locate **UDP** and **+Add New**, this will open up data input through UDP so that Splunk can receive **Syslogs** from pfSense
+7. Locate **UDP** and **+Add New**, this will open data input through UDP so that Splunk can receive **Syslogs** from pfSense
 
 ![HTH Forwarder 5](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/673de4bf-2e26-47db-9287-a44446cd0fbd)
 
@@ -566,7 +566,7 @@ This is the last step for the setup of our network security for the home lab. We
 
 This is the last step needed for Splunk configurations. This will allow the Windows DC and other Client Users connected to the domain; events and alerts to be sent to Splunk.
 
-1. Still on the DC VM open up the Splunk website, navigate to the downloads and free trial page we have done before. Select **Get My Free Download** under **Universal Forwarder**
+1. Still on the DC VM open the Splunk website, navigate to the downloads and free trial page we have done before. Select **Get My Free Download** under **Universal Forwarder**
   - Link: https://www.splunk.com/en_us/download.html
 
 ![HTH Forwarder 9](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/4acf5a22-cb60-4401-9582-a62caadcc958)
@@ -598,7 +598,7 @@ This is the last step needed for Splunk configurations. This will allow the Wind
 
 ![HTH Forwarder 13](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/2d7f5cfc-9cf1-4719-977b-f380f88cdd5b)
 
-- Here create an admin account for Splunk Universal Forwarder, I just did the same credentials for the Splunk Enterprise Installation process
+- Create an admin account for Splunk Universal Forwarder, I just did the same credentials for the Splunk Enterprise Installation process
 
 ![HTH Forwarder 14](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/368286b0-d1dc-4502-abe7-5d94e626a624)
 
