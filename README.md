@@ -489,27 +489,80 @@ Now we will be installing the SIEM, Splunk. Splunk will centralize, collect, and
 
 ## Install and Configuration of Splunk Forwarder
 
+This is the last step for the setup of our network security for the home lab. We are going to configure the settings in pfSense to ensure alerts and data are sent to Splunk. Then we will install **Splunk Forwarder** an external software that will allow the Windows DC and other Windows Client VMs alerts sent to Splunk interface
+
+1. Go back to the **DC VM** and open the **pfSense Web Interface**: **172.16.0.2** is the web address to type in
+
+2. Navigate to **Status -> System Logs**
+
 ![HTH Forwarder 1](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/a4150ccd-cbc4-47fc-8f9a-f6012ce42254)
+
+3. **Check Enable Remote Logging**, this will allow log messages to be remotely sent to an address, Splunk
+
+- For **Remote log servers** enter: **172.16.0.4:514**
+  - This will direct the sent logs to the Splunk address through the UDP port (514)
+- Next have **System Events and Firewall Events** checked. This includes **Snort** alerts as previously done the alerts are sent as **Syslogs**.
+- Hit **Save**
+
+- This is all that needs to be done for the firewall and IDS/IPS settings and now we will go to the **Splunk VM** and configure the settings there
 
 ![HTH Forwarder 2](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/6fc1fef4-db63-4d0e-aee5-f18c57d6c199)
 
+4. This part is to ensure **Splunk** runs on boot up of the VM
+
+- Open **Ubuntu terminal**
+- Type: "**sudo /opt/splunk/bin/splunk start --accept-license && sudo /opt/splunk/bin/splunk enable boot-start**"
+- Then type the password for the **Ubuntu Desktop login**
+
 ![HTH Forwarder 3](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/c9605d4e-b8e0-4e61-88d5-a349abae6073)
+
+5. Open up the **Splunk Enterprise Interface** (172.16.0.4:8000) in your web browser
+
+6. Navigate to **Settings -> Data Inputs**
 
 ![HTH Forwarder 4](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/8704ecbd-4a4c-4ff5-8634-716c2a8226d8)
 
+7. Locate **UDP** and **+Add New**, this will open up data input through UDP so that Splunk can receive **Syslogs** from pfSense
+
 ![HTH Forwarder 5](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/673de4bf-2e26-47db-9287-a44446cd0fbd)
+
+8. Make sure to select **UDP** tab and for **Port** type: **514**
+
+- Hit **Next**
 
 ![HTH Forwarder 6](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/b5714b98-f4e7-4b01-ad5c-52c7fb249402)
 
+- Source type: Click the dropdown and select **syslog**
+- Index: **main** (this is where the syslogs will be collected)
+- Click **Next** all the way through to complete the process
+
 ![HTH Forwarder 7](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/0b2d2c19-14de-4985-b750-8cc4dc10274f)
+
+9. This step is needed for **Splunk Forwarder** to have alerts forwarded or sent to Splunk
+
+- Navigate to **Settings -> Forwarding and receiving**
 
 ![HTH Forwarder 8 25](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/3688f597-2b29-4d83-a311-d526f5912899)
 
+- Under **Receive data**, click **+ Add new**
+
 ![HTH Forwarder 8 35](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/e2641dce-99a6-4bbc-bd0d-c7a46960bf9a)
+
+- Type: **9997** for the port to listen, this is also the default
+- Click **Save**
 
 ![HTH Forwarder 8 5](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/713c93d3-1c49-4717-9486-30f9ffcf9f17)
 
+- Before we go and install **Splunk Universal Forwarder**, we can go check if pfSense and Snort have sent logs to Splunk
+
+- Navigate to **Settings -> Searches, reports, and alerts**
+- Here we can search and refine the search to output specific results
+  - Type: "**source="udp:514" index="main" sourcetype="syslog"**"
+- Elements will be highlighted from the search results, but here we can confirm the pfSense firewall and Snort IDS/IPS are connected and send alerts to Splunk
+
 ![HTH Forwarder 8](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/9c115a7a-f2d2-44ca-bef8-a5778b3dda05)
+
+### Installing Splunk Universal Forwarder in the DC VM
 
 ![HTH Forwarder 9](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/4acf5a22-cb60-4401-9582-a62caadcc958)
 
@@ -544,6 +597,4 @@ Now we will be installing the SIEM, Splunk. Splunk will centralize, collect, and
 ![HTH Forwarder 24](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/bce4bd8f-b17c-4cf9-b5ea-cf38d194bd37)
 
 ![HTH Forwarder 25](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/12c9ee69-721a-4fc8-9273-7cf9afdad1cb)
-
-![HTH Forwarder 26](https://github.com/marlopenaga/Network-Security-Home-Lab-Implementation-PfSense-Snort-Splunk/assets/165770329/6f3a8bc8-b270-4b1d-9fda-e41bfed2bc3b)
 
